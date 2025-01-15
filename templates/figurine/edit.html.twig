@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Figurine{% endblock %}
+
+{% block body %}
+    <h1>Edit Figurine</h1>
+
+    {{ include('figurine/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_figurine_index') }}">back to list</a>
+
+    {{ include('figurine/_delete_form.html.twig') }}
+{% endblock %}

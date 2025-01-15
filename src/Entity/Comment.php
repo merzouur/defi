@@ -18,7 +18,7 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Book $book = null;
+    private ?Figurine $figurine = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -41,14 +41,14 @@ class Comment
         return $this;
     }
 
-    public function getBook(): ?Book
+    public function getFigurine(): ?Figurine
     {
-        return $this->book;
+        return $this->figurine;
     }
 
-    public function setBook(?Book $book): static
+    public function setFigurine(Figurine $figurine): static
     {
-        $this->book = $book;
+        $this->figurine = $figurine;
 
         return $this;
     }
