@@ -15,4 +15,11 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+
+    #[Route('/', name: 'root_redirect')]
+    public function redirectToHome(): Response
+    {
+        return $this->redirectToRoute('app_home');
+    }
 }
