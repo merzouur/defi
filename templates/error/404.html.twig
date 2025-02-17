@@ -1,0 +1,28 @@
+{# templates/error/404.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Page non trouvée</title>
+    <script>
+        let timeLeft = 3;
+
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.textContent = `Vous serez redirigé vers la page d'accueil dans ${timeLeft} secondes...`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                window.location.href = "{{ path('app_home') }}";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+    </script>
+</head>
+<body>
+    <h1>Page non trouvée</h1>
+    <p>Désolé, la page que vous recherchez n'existe pas.</p>
+    <p id='countdown'></p>
+</body>
+</html>

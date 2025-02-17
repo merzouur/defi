@@ -6,6 +6,7 @@ use App\Entity\Figurine;
 use App\Form\FigurineType;
 use App\Repository\CommentRepository;
 use App\Repository\FigurineRepository;
+use App\Repository\OeuvreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,11 +45,12 @@ final class FigurineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_figurine_show', methods: ['GET'])]
-    public function show(Figurine $figurine, CommentRepository $commentRepository): Response
+    public function show(Figurine $figurine, CommentRepository $commentRepository, OeuvreRepository $oeuvreRepository): Response
     {
         return $this->render('figurine/show.html.twig', [
             'figurine' => $figurine,
-            'comments' =>$commentRepository->findBy(['figurine'=>$figurine])
+            'comments' =>$commentRepository->findBy(['figurine'=>$figurine]),
+            'oeuvre' =>$oeuvreRepository->findBy(['figurine'=>$figurine])
 
         ]);
     }
