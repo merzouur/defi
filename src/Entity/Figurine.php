@@ -31,8 +31,10 @@ class Figurine
     private Collection $favoris;
 
     #[ORM\ManyToOne(inversedBy: 'figurines')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?category $category = null;
+    private ?Oeuvre $oeuvre = null;
+
+    #[ORM\ManyToOne(inversedBy: 'figurines')]
+   
 
     public function __construct()
     {
@@ -111,14 +113,14 @@ class Figurine
         return $this;
     }
 
-    public function getCategory(): ?category
+    public function getOeuvre(): ?Oeuvre
     {
-        return $this->category;
+        return $this->oeuvre;
     }
 
-    public function setCategory(?category $category): static
+    public function setOeuvre(?Oeuvre $oeuvre): static
     {
-        $this->category = $category;
+        $this->oeuvre = $oeuvre;
 
         return $this;
     }
