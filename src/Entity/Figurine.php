@@ -30,17 +30,14 @@ class Figurine
     #[ORM\OneToMany(targetEntity: Favori::class, mappedBy: 'figurine')]
     private Collection $favoris;
 
-    #[ORM\ManyToOne(inversedBy: 'figurines')]
+    #[ORM\ManyToOne(targetEntity: Oeuvre::class, inversedBy: 'figurines')]
+    #[ORM\JoinColumn(name: 'oeuvre_id', referencedColumnName: 'id')]
     private ?Oeuvre $oeuvre = null;
-
-    #[ORM\ManyToOne(inversedBy: 'figurines')]
-   
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -83,6 +80,17 @@ class Figurine
         return $this;
     }
 
+    public function getOeuvre(): ?Oeuvre
+    {
+        return $this->oeuvre;
+    }
+
+    public function setOeuvre(?Oeuvre $oeuvre): self
+    {
+        $this->oeuvre = $oeuvre;
+        return $this;
+    }
+
     /**
      * @return Collection<int, Favori>
      */
@@ -104,7 +112,6 @@ class Figurine
     public function removeFavori(Favori $favori): static
     {
         if ($this->favoris->removeElement($favori)) {
-            // set the owning side to null (unless already changed)
             if ($favori->getFigurine() === $this) {
                 $favori->setFigurine(null);
             }
@@ -112,17 +119,4 @@ class Figurine
 
         return $this;
     }
-
-    public function getOeuvre(): ?Oeuvre
-    {
-        return $this->oeuvre;
-    }
-
-    public function setOeuvre(?Oeuvre $oeuvre): static
-    {
-        $this->oeuvre = $oeuvre;
-
-        return $this;
-    }
-
 }

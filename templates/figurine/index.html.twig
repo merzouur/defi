@@ -5,6 +5,21 @@
 {% block body %}
     <h1>Figurine index</h1>
 
+    <!-- Formulaire de sélection de catégorie -->
+    <form method="GET" action="{{ path('app_figurine_index') }}">
+        <label for="category">Catégorie :</label>
+        <select name="category" id="category">
+            <option value="">Toutes les catégories</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == app.request.query.get('category') %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <!-- Table des figurines -->
     <table class="table">
         <thead>
             <tr>
@@ -12,7 +27,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +44,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_figurine_new') }}">Create new</a>
+    <a href="{{ path('app_figurine_new') }}">Créer une nouvelle figurine</a>
 {% endblock %}

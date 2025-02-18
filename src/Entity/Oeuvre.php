@@ -24,7 +24,8 @@ class Oeuvre
     #[ORM\OneToMany(targetEntity: Figurine::class, mappedBy: 'oeuvre')]
     private Collection $figurines;
 
-    #[ORM\ManyToOne(inversedBy: 'oeuvres')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'oeuvres')]
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private ?Category $category = null;
 
     public function __construct()
@@ -70,7 +71,6 @@ class Oeuvre
     public function removeFigurine(Figurine $figurine): static
     {
         if ($this->figurines->removeElement($figurine)) {
-            // set the owning side to null (unless already changed)
             if ($figurine->getOeuvre() === $this) {
                 $figurine->setOeuvre(null);
             }
@@ -84,10 +84,9 @@ class Oeuvre
         return $this->category;
     }
 
-    public function setCategory(?Category $category): static
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
         return $this;
     }
 }
