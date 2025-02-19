@@ -19,6 +19,9 @@ class Favori
     #[ORM\ManyToOne(inversedBy: 'favoris')]
     private ?Figurine $figurine = null;
 
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTime $createdAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Favori
     public function setFigurine(?Figurine $figurine): static
     {
         $this->figurine = $figurine;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

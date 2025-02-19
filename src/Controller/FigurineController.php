@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Figurine;
+use App\Entity\Favori;
 use App\Form\FigurineType;
 use App\Repository\CommentRepository;
 use App\Repository\FigurineRepository;
@@ -67,12 +68,20 @@ final class FigurineController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_figurine_show', methods: ['GET'])]
-    public function show(Figurine $figurine, CommentRepository $commentRepository, OeuvreRepository $oeuvreRepository): Response
+    public function show(Figurine $figurine, CommentRepository $commentRepository, OeuvreRepository $oeuvreRepository, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        $favoris = [];
+
+        if ($user) {
+            $favoris = $entityManager->getRepository(Favori::class)
+                ->findBy(['user' => $user]);
+        }
         return $this->render('figurine/show.html.twig', [
             'figurine' => $figurine,
             'comments' => $commentRepository->findBy(['figurine' => $figurine]),
             'oeuvre' => $figurine->getOeuvre(),
+            'favoris' => $favoris,
         ]);
     }
 

@@ -1,0 +1,21 @@
+{# templates/favori/list.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Favoris - FiguraForma{% endblock %}
+
+{% block body %}
+<h1>Mes Favoris</h1>
+
+<ul>
+    {% for figurine in figurines %}
+        <li>
+            <h2>{{ figurine.name }}</h2>
+            <p>{{ figurine.description }}</p>
+            <p>Prix : {{ figurine.price }}</p>
+            <!-- Ajoutez d'autres informations ou actions ici -->
+        </li>
+    {% else %}
+        <li>Vous n'avez pas encore de favoris.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

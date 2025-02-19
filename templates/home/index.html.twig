@@ -1,20 +1,60 @@
+{# templates/home.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}FiguraForma - Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<header>
+    <div class="logo">FiguraForma</div>
+    <nav>
+      <ul class="center-menu">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#categories">Catégories</a></li>
+        <li><a href="#nouveautes">Nouveautés</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="auth-buttons">
+      <a href="{{ path('app_login') }}" class="auth-button">Se connecter</a>
+      <a href="{{ path('app_register') }}" class="auth-button">S'inscrire</a>
+    </div>
+</header>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<section class="hero">
+  <h1 class="hero-title">FiguraForma</h1>
+  <p class="hero-subtitle">Découvrez les figurines sous toutes leurs formes.</p>
+</section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/ramzimerzougui/Desktop/formation/defi/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/Users/ramzimerzougui/Desktop/formation/defi/templates/home/index.html.twig</code></li>
-    </ul>
-</div>
+<section class="categories hidden" id="categories">
+  <h2>Nos Catégories</h2>
+  <div class="category-flex">
+    <a href="{{ path('app_category_index', {slug: 'anime'}) }}" class="category-card">Anime</a>
+    <div class="category-card">Comics</div>
+  </div>
+</section>
+
+<section class="nouveautes hidden" id="nouveautes">
+  <h2>Dernières Figurines</h2>
+  <div class="nouveautes-flex">
+    <div class="nouveaute-card">
+      <img src="{{ asset('images/naruto.jpg') }}" alt="Figurine 1">
+      <h3>Naruto Uzumaki</h3>
+    </div>
+    <div class="nouveaute-card">
+      <img src="{{ asset('images/figurine2.jpg') }}" alt="Figurine 2">
+      <h3>Nom de la Figurine</h3>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="social-icons">
+    <a href="https://www.facebook.com" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.twitter.com" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.instagram.com" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+  </div>
+  <p>&copy; 2024 FiguraForma</p>
+</footer>
+
+<script src="{{ asset('js/script.js') }}"></script>
 {% endblock %}
