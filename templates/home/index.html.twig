@@ -26,26 +26,27 @@
 </section>
 
 <section class="categories hidden" id="categories">
-  <h2>Nos Catégories</h2>
-  <div class="category-flex">
-    <a href="{{ path('app_category_index', {slug: 'anime'}) }}" class="category-card">Anime</a>
-    <div class="category-card">Comics</div>
-  </div>
-</section>
+    <h2>Nos Catégories</h2>
+    <div class="category-flex">
+          {% for category in categories %}
+      <a href="{{ path('app_category_index', {name: category.name|lower|replace({' ': '-'})}) }}" class="category-card">{{ category.name }}</a>
+    {% endfor %}
+    </div>
+  </section>
 
-<section class="nouveautes hidden" id="nouveautes">
-  <h2>Dernières Figurines</h2>
-  <div class="nouveautes-flex">
-    <div class="nouveaute-card">
-      <img src="{{ asset('images/naruto.jpg') }}" alt="Figurine 1">
-      <h3>Naruto Uzumaki</h3>
+  <section class="nouveautes hidden" id="nouveautes">
+    <h2>Dernières Figurines</h2>
+    <div class="nouveautes-flex">
+      <div class="nouveaute-card">
+        <img src="naruto.jpg" alt="Figurine 1">
+        <h3>Naruto Uzumaki</h3>
+      </div>
+      <div class="nouveaute-card">
+        <img src="figurine2.jpg" alt="Figurine 2">
+        <h3>Nom de la Figurine</h3>
+      </div>
     </div>
-    <div class="nouveaute-card">
-      <img src="{{ asset('images/figurine2.jpg') }}" alt="Figurine 2">
-      <h3>Nom de la Figurine</h3>
-    </div>
-  </div>
-</section>
+  </section>
 
 <footer>
   <div class="social-icons">
