@@ -3,7 +3,7 @@
 {% block title %}Figurine{% endblock %}
 
 {% block body %}
-    <h1>Figurine</h1>
+    <h1>{{ figurine.name }}</h1>
 
     <table class="table">
         <tbody>
@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Oeuvre</th>
-                <td>{{ oeuvre.name }}</td>
+                <td>{{ figurine.oeuvre.name }}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -30,18 +30,27 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_figurine_index') }}">back to list</a>
-    <a href="{{ path('app_figurine_edit', {'id': figurine.id}) }}">edit</a>
+    <a href="{{ path('app_figurine_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_figurine_edit', {'id': figurine.id}) }}">Modifier</a>
 
+    <h2>Commentaires</h2>
     <ul>
         {% for comment in comments %}
-            <li>{{ comment.user.email }} : {{ comment.content }}</li>
+            <li>{{ comment.user.email }}: {{ comment.content }}</li>
+        {% else %}
+            <li>Aucun commentaire pour le moment.</li>
         {% endfor %}
     </ul>
 
-    <a href="{{ path('app_comment_new') }}">ajouter commentaire</a>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h3>Ajouter un commentaire</h3>
+        {{ form_start(commentForm, {'action': path('app_comment_new', {'id': figurine.id})}) }}
+            {{ form_widget(commentForm) }}
+            <button class="btn">Ajouter</button>
+        {{ form_end(commentForm) }}
+    {% endif %}
 
-     <form action="{{ path('app_favori_toggle', {'id': figurine.id}) }}" method="post" style="display:inline;">
+    <form action="{{ path('app_favori_toggle', {'id': figurine.id}) }}" method="post" style="display:inline;">
         <button type="submit" class="favori-button">
             <i class="fas fa-heart"></i>
             {% set isFavori = false %}

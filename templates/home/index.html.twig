@@ -7,17 +7,26 @@
 <header>
     <div class="logo">FiguraForma</div>
     <nav>
-      <ul class="center-menu">
-        <li><a href="#home">Accueil</a></li>
-        <li><a href="#categories">Catégories</a></li>
-        <li><a href="#nouveautes">Nouveautés</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+  <ul class="center-menu">
+    <li><a href="#home">Accueil</a></li>
+    <li><a href="#categories">Catégories</a></li>
+    <li><a href="#nouveautes">Nouveautés</a></li>
+    <li><a href="#contact">Contact</a></li>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+      <li><a href="{{ path('app_favori_list') }}">Favoris</a></li>
+    {% endif %}
+  </ul>
+</nav>
     <div class="auth-buttons">
-      <a href="{{ path('app_login') }}" class="auth-button">Se connecter</a>
-      <a href="{{ path('app_register') }}" class="auth-button">S'inscrire</a>
-    </div>
+  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <span>{{ app.user.email }}</span>
+    <a href="{{ path('app_logout') }}" class="auth-button">Se déconnecter</a>
+  {% else %}
+    <a href="{{ path('app_login') }}" class="auth-button">Se connecter</a>
+    <a href="{{ path('app_register') }}" class="auth-button">S'inscrire</a>
+  {% endif %}
+</div>
+
 </header>
 
 <section class="hero">
@@ -29,24 +38,24 @@
     <h2>Nos Catégories</h2>
     <div class="category-flex">
           {% for category in categories %}
-      <a href="{{ path('app_category_index', {name: category.name|lower|replace({' ': '-'})}) }}" class="category-card">{{ category.name }}</a>
+      <a href="{{ path('app_category_show', {id: category.id }) }}" class="category-card">{{ category.name }}</a>
     {% endfor %}
     </div>
   </section>
 
-  <section class="nouveautes hidden" id="nouveautes">
-    <h2>Dernières Figurines</h2>
-    <div class="nouveautes-flex">
-      <div class="nouveaute-card">
-        <img src="naruto.jpg" alt="Figurine 1">
-        <h3>Naruto Uzumaki</h3>
-      </div>
-      <div class="nouveaute-card">
-        <img src="figurine2.jpg" alt="Figurine 2">
-        <h3>Nom de la Figurine</h3>
-      </div>
-    </div>
-  </section>
+ <section class="nouveautes hidden" id="nouveautes">
+  <h2>Dernières Figurines</h2>
+  <div class="nouveautes-flex">
+    {% for figurine in latestFigurines %}
+       <a href="{{ path('app_figurine_show', {id: figurine.id}) }}" class="nouveaute-card-link">
+        <div class="nouveaute-card">
+          <img src="" alt="{{ figurine.name }}">
+          <h3>{{ figurine.name }}</h3>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
 
 <footer>
   <div class="social-icons">

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Figurine;
 use App\Entity\Favori;
+use App\Entity\Comment;
 use App\Form\FigurineType;
 use App\Repository\CommentRepository;
 use App\Repository\FigurineRepository;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CommentType;
 
 #[Route('/figurine')]
 final class FigurineController extends AbstractController
@@ -21,13 +23,11 @@ final class FigurineController extends AbstractController
     #[Route(name: 'app_figurine_index', methods: ['GET'])]
     public function index(FigurineRepository $figurineRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
-        // Récupérer l'ID de la catégorie sélectionnée à partir de la requête
+        
         $categoryId = $request->query->get('category');
 
-        // Récupérer toutes les catégories pour le formulaire de sélection
         $categories = $categoryRepository->findAll();
 
-        // Filtrer les figurines en fonction de la catégorie sélectionnée
         if ($categoryId) {
             $figurines = $figurineRepository->createQueryBuilder('f')
                 ->join('f.oeuvre', 'o')
@@ -36,11 +36,11 @@ final class FigurineController extends AbstractController
                 ->getQuery()
                 ->getResult();
         } else {
-            // Si aucune catégorie n'est sélectionnée, récupérer toutes les figurines
+          
             $figurines = $figurineRepository->findAll();
         }
 
-        // Rendre la vue avec les figurines et les catégories
+    
         return $this->render('figurine/index.html.twig', [
             'figurines' => $figurines,
             'categories' => $categories,
@@ -74,14 +74,21 @@ final class FigurineController extends AbstractController
         $favoris = [];
 
         if ($user) {
-            $favoris = $entityManager->getRepository(Favori::class)
-                ->findBy(['user' => $user]);
+            $favoris = $entityManager->getRepository(Favori::class)->findBy(['user' => $user]);
         }
+
+        // Créer un nouveau commentaire et le formulaire associé
+        $comment = new Comment();
+        $comment->setFigurine($figurine);
+        $commentForm = $this->createForm(CommentType::class, $comment);
+
+        // Passer les commentaires et le formulaire au template
         return $this->render('figurine/show.html.twig', [
             'figurine' => $figurine,
             'comments' => $commentRepository->findBy(['figurine' => $figurine]),
             'oeuvre' => $figurine->getOeuvre(),
             'favoris' => $favoris,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 
