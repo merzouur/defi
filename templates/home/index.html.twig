@@ -19,7 +19,7 @@
 </nav>
     <div class="auth-buttons">
   {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-    <span>{{ app.user.email }}</span>
+    <span>{{ app.user.username }}</span>
     <a href="{{ path('app_logout') }}" class="auth-button">Se déconnecter</a>
   {% else %}
     <a href="{{ path('app_login') }}" class="auth-button">Se connecter</a>

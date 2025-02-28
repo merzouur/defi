@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Oeuvre;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\OeuvreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,10 +45,14 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-    public function show(Category $category): Response
+    public function show(Category $category, OeuvreRepository $oeuvreRepository): Response
     {
-        return $this->render('category/show.html.twig', [
-            'category' => $category,
+      
+         $oeuvres = $oeuvreRepository->findBy(['category' => $category]);
+
+         return $this->render('category/show.html.twig', [
+             'category' => $category,
+             'oeuvres' => $oeuvres,
         ]);
     }
 
