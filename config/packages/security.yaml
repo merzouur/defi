@@ -36,8 +36,10 @@ security:
          - { path: ^/figurine/new, roles: ROLE_ADMIN }
          - { path: ^/figurine/\d+/edit, roles: ROLE_ADMIN }
          - { path: ^/figurine/\d+/edit, roles: ROLE_ADMIN }
+         - { path: ^/figurine/\d+/delete, roles: ROLE_ADMIN }
          - { path: ^/oeuvre/new, roles: ROLE_ADMIN }
          - { path: ^/oeuvre/\d+/edit, roles: ROLE_ADMIN}
+         - { path: ^/oeuvre/\d+/delete, roles: ROLE_ADMIN}
          - { path: ^/category/new, roles: ROLE_ADMIN }
          - { path: ^/category/\d+/edit, roles: ROLE_ADMIN }
 when@test:
