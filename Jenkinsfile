@@ -56,7 +56,14 @@ pipeline {
 
         stage('Déploiement') {
             steps {
+                // Changer les permissions avant de supprimer les fichiers
+                sh "sudo chmod -R 775 /var/www/html/${DEPLOY_DIR}/var/cache/prod/"
+                sh "sudo chown -R jenkins:jenkins /var/www/html/${DEPLOY_DIR}/var/cache/prod/"
+
+                // Supprimer les fichiers
                 sh "rm -rf /var/www/html/${DEPLOY_DIR}/*" // Nettoyage du dossier de destination
+
+                // Copier les nouveaux fichiers
                 sh "cp -rT ${DEPLOY_DIR} /var/www/html/${DEPLOY_DIR}"
                 sh "chmod -R 775 /var/www/html/${DEPLOY_DIR}/var"
             }
