@@ -7,7 +7,7 @@ pipeline {
         DEPLOY_DIR = "web021"
     }
 
-    stages {
+        stages {
         stage('Cloner le dépôt') {
             steps {
                 sh "rm -rf ${DEPLOY_DIR}" // Nettoyage du précédent build
@@ -28,7 +28,7 @@ pipeline {
                 script {
                     def envLocal = """
                     APP_ENV=prod
-                    APP_DEBUG=0
+                    APP_DEBUG=1
                     DATABASE_URL=mysql://root:routitop@127.0.0.1:3306/${DEPLOY_DIR}?serverVersion=8.3.0&charset=utf8mb4
                     """.stripIndent()
 
@@ -50,23 +50,27 @@ pipeline {
             steps {
                 dir("${DEPLOY_DIR}") {
                     sh 'php bin/console cache:clear --env=prod'
+                    sh 'php bin/console cache:warmup'
                 }
             }
         }
 
         stage('Déploiement') {
             steps {
+                sh "rm -rf /var/www/html/${DEPLOY_DIR}" // Supprime le dossier de destination
+                sh "mkdir /var/www/html/${DEPLOY_DIR}" // Recréé le dossier de destination
                 sh "cp -rT ${DEPLOY_DIR} /var/www/html/${DEPLOY_DIR}"
                 sh "chmod -R 775 /var/www/html/${DEPLOY_DIR}/var"
             }
-            post {
-                success {
-                    echo 'Déploiement réussi !'
-                }
-                failure {
-                    echo 'Erreur lors du déploiement.'
-                }
-            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Déploiement réussi !'
+        }
+        failure {
+            echo 'Erreur lors du déploiement.'
         }
     }
 }
