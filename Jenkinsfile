@@ -56,8 +56,6 @@ pipeline {
 
         stage('Déploiement') {
             steps {
-                sh "rm -rf /var/www/html/${DEPLOY_DIR}" // Supprime le dossier de destination
-                sh "mkdir /var/www/html/${DEPLOY_DIR}" // Recréé le dossier de destination
                 sh "cp -rT ${DEPLOY_DIR} /var/www/html/${DEPLOY_DIR}"
                 sh "chmod -R 775 /var/www/html/${DEPLOY_DIR}/var"
             }
