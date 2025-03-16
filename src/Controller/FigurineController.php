@@ -110,7 +110,7 @@ final class FigurineController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_figurine_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_figurine_delete', methods: ['POST'])]
     public function delete(Request $request, Figurine $figurine, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $figurine->getId(), $request->request->get('_token'))) {

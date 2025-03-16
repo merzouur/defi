@@ -35,8 +35,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/figurine/new, roles: ROLE_ADMIN }
          - { path: ^/figurine/\d+/edit, roles: ROLE_ADMIN }
-         - { path: ^/figurine/\d+/edit, roles: ROLE_ADMIN }
-         - { path: ^/figurine/\d+/delete, roles: ROLE_ADMIN }
+         - { path: ^/figurine/\d+/delete$, roles: ROLE_ADMIN }
          - { path: ^/oeuvre/new, roles: ROLE_ADMIN }
          - { path: ^/oeuvre/\d+/edit, roles: ROLE_ADMIN}
          - { path: ^/oeuvre/\d+/delete, roles: ROLE_ADMIN}

@@ -1,14 +1,23 @@
 {# templates/registration/register.html.twig #}
 
-{% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
-
-{% block body %}
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_widget(registrationForm) }}
-        <!-- Le bouton de soumission est déjà ajouté dans le formulaire Symfony -->
-    {{ form_end(registrationForm) }}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-wrapper">
+        <h1>Inscription</h1>
+        {{ form_start(registrationForm) }}
+            {{ form_widget(registrationForm) }}
+            <!-- Ajouter un bouton de soumission personnalisé -->
+            <button type="submit" class="submit-button">S'inscrire</button>
+        {{ form_end(registrationForm) }}
+        <p class="switch-form">Déjà inscrit ? <a href="{{ path('app_login') }}">Se connecter</a></p>
+    </div>
+</body>
+</html>
