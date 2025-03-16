@@ -9,6 +9,7 @@ use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -81,4 +82,25 @@ final class CommentController extends AbstractController
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/api/comments', name: 'get_comments', methods: ['GET'])]
+    public function getComments(CommentRepository $commentRepository): JsonResponse
+    {
+        $data = [];
+      $comments = $commentRepository->findAll();
+      foreach ($comments as $comment){
+            $data[] = [
+                'id' => $comment->getId(),
+                'content' => $comment->getContent(),
+                'auteur' => $comment->getUser()->getUsername(), 
+            ];
+      }
+
+        if (empty($comments)) {
+            return new JsonResponse(['message' => 'No comments found'], JsonResponse::HTTP_OK);
+        }
+
+        return new JsonResponse($data, JsonResponse::HTTP_OK);
+    }
+
 }
