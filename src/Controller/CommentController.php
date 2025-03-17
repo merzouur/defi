@@ -97,7 +97,7 @@ final class CommentController extends AbstractController
       }
 
         if (empty($comments)) {
-            return new JsonResponse(['message' => 'No comments found'], JsonResponse::HTTP_OK);
+            return new JsonResponse(['message' => 'Pas de commentaire existant'], JsonResponse::HTTP_OK);
         }
 
         return new JsonResponse($data, JsonResponse::HTTP_OK);
